@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-namespace Logger
-{
-    public class Logger
-    {
+using System.Text;
+namespace Logger {
+    public class Logger {
 
         private static StreamWriter log_writer;
 
 
-        static Logger()
-        {
+        static Logger() {
             log_writer = new StreamWriter("log.txt", true, Encoding.UTF8);
         }
 
-        public static void log(String line)
-        {
+        public static void log(String line) {
             StringBuilder output = new StringBuilder(DateTime.Now.ToString());
             output.Append(" - ");
             output.Append(line);
