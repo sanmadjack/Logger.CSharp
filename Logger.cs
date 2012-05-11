@@ -19,5 +19,18 @@ namespace Logger {
             log_writer.WriteLine(output.ToString());
         }
 
+        public static void log(Exception e) {
+            StringBuilder output = new StringBuilder(DateTime.Now.ToString());
+            output.Append(" - ");
+            output.Append(e.Message);
+            output.AppendLine(e.StackTrace);
+            log_writer.WriteLine(output.ToString());
+            if (e.InnerException != null) {
+                log(e.InnerException);
+            }
+        }
+
+
+
     }
 }
