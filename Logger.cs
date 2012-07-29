@@ -8,7 +8,7 @@ namespace Logger {
 
         static Logger() {
         }
-
+        public static int MaxFiles = 100;
         public static string AppName = null;
 
         public static void log(String line) {
@@ -21,12 +21,23 @@ namespace Logger {
             if (!log_folder.Exists)
                 log_folder.Create();
 
-            string name = Path.Combine(log_folder.FullName, System.DateTime.Now.ToString().Replace('/', '-').Replace(':','-') + ".txt");
+            FileInfo[] existing = log_folder.GetFiles("*.log");
+            if(existing.Length>MaxFiles-1) {
+                for(int i = 0; i<MaxFiles;i++) {
+                    try {
+                        existing[i].Delete();
+                    } catch (Exception e) {
+                        throw new Exception("Error deleting log file: " + existing[i].FullName, e);
+                    }
+                }
+            }
+
+            string name = Path.Combine(log_folder.FullName, System.DateTime.Now.ToString().Replace('/', '-').Replace(':','-') + ".log");
 
             try {
                 log_writer = new StreamWriter(name, true, Encoding.UTF8);
             } catch (Exception e) {
-                throw new Exception("Error creating logging file: " + name, e);
+                throw new Exception("Error creating log file: " + name, e);
             }
 
 
