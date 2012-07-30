@@ -8,6 +8,9 @@ namespace Logger {
 
         static Logger() {
         }
+
+        public static string file_name;
+
         public static int MaxFiles = 100;
         public static string AppName = null;
 
@@ -32,18 +35,22 @@ namespace Logger {
                 }
             }
 
-            string name = Path.Combine(log_folder.FullName, System.DateTime.Now.ToString().Replace('/', '-').Replace(':','-') + ".log");
 
-            try {
-                log_writer = new StreamWriter(name, true, Encoding.UTF8);
-            } catch (Exception e) {
-                throw new Exception("Error creating log file: " + name, e);
+            if (file_name == null) {
+                file_name = Path.Combine(log_folder.FullName, System.DateTime.Now.ToString().Replace('/', '-').Replace(':', '-') + ".log");
+
+
             }
-
-
+            try {
+                log_writer = new StreamWriter(file_name, true, Encoding.UTF8);
+            } catch (Exception e) {
+                throw new Exception("Error creating log file: " + file_name, e);
+            }
             StringBuilder output = new StringBuilder(DateTime.Now.ToString());
             output.Append(" - ");
             output.Append(line);
+
+
 
             log_writer.WriteLine(output.ToString());
 
