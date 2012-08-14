@@ -43,19 +43,21 @@ namespace Logger {
             }
             try {
                 log_writer = new StreamWriter(file_name, true, Encoding.UTF8);
+
+                StringBuilder output = new StringBuilder(DateTime.Now.ToString());
+                output.Append(" - ");
+                output.Append(line);
+
+
+
+                log_writer.WriteLine(output.ToString());
+
+                log_writer.Close();
+                log_writer.Dispose();
+
             } catch (Exception e) {
-                throw new Exception("Error creating log file: " + file_name, e);
+                throw new Exception("Error writing to log file: " + file_name, e);
             }
-            StringBuilder output = new StringBuilder(DateTime.Now.ToString());
-            output.Append(" - ");
-            output.Append(line);
-
-
-
-            log_writer.WriteLine(output.ToString());
-
-            log_writer.Close();
-            log_writer.Dispose();
         }
 
         public static void log(Exception e) {
