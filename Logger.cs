@@ -16,17 +16,17 @@ namespace Logger {
 
         public static void log(String line) {
             DirectoryInfo log_folder;
-            if(AppName!=null)
+            if (AppName != null)
                 log_folder = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName, "logs"));
-            else 
+            else
                 log_folder = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "logs"));
 
             if (!log_folder.Exists)
                 log_folder.Create();
 
             FileInfo[] existing = log_folder.GetFiles("*.log");
-            if(existing.Length>MaxFiles-1) {
-                for(int i = 0; i<MaxFiles;i++) {
+            if (existing.Length > MaxFiles - 1) {
+                for (int i = 0; i < MaxFiles; i++) {
                     try {
                         existing[i].Delete();
                     } catch (Exception e) {
