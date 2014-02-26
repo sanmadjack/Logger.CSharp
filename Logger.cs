@@ -16,7 +16,7 @@ namespace Logger {
 
         public static void log(String line) {
             DirectoryInfo log_folder;
-            if (AppName != null)
+            if (!String.IsNullOrEmpty(AppName))
                 log_folder = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName, "logs"));
             else
                 log_folder = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "logs"));
@@ -36,7 +36,7 @@ namespace Logger {
             }
 
 
-            if (file_name == null) {
+            if (String.IsNullOrEmpty(file_name)) {
                 file_name = Path.Combine(log_folder.FullName, System.DateTime.Now.ToString().Replace('/', '-').Replace(':', '-') + ".log");
 
 
